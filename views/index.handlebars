@@ -1,0 +1,48 @@
+<div>
+    <button class="submit-btn">~Scrape New Articles~</button>
+    <h1>Article List</h1>
+    <ul class="article-list">
+    {{#each articles}}                   
+        <li id="{{_id}}"> {{title}} - {{link}} -
+            <a href class="save-item" data-id="{{_id}}">💾</a>
+        </li>
+    {{/each}}
+    </ul>
+
+            {{!-- $(".submit-btn").on("click", ()=> {
+            $(".loading").show();
+            const name = $(".product-name").val().trim();
+            const price = $(".product-price").val().trim();
+            $.ajax({
+                method: "POST",
+                url: "/api/products/new",
+                data: {name, price}
+            }).then((data)=> {
+                $(".loading").hide();
+                const html = `<li>${data.name} - ${data.price} 🗑</li>`;
+                $(".product-list").append(html);
+            });
+        }); --}}
+</div>
+
+<script>
+    $(document).ready(() => {
+       
+        $(document).on("click", ".save-item", function (event) {
+            event.preventDefault();
+            const id = $(this).data("id");
+            console.log(`Article ID is ${id}`);
+            
+            $.ajax({
+                url: `/api/article/${id}`,
+                method: "PUT", 
+                data: {
+                    saved: true
+                }
+            }).then(function () {
+                  console.log('saved');
+            });
+        })
+    });
+</script>
+
